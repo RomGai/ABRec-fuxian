@@ -75,3 +75,30 @@ pytest -q
 
 - The code is structured to stay fully in TensorFlow/Keras for AB-Rec training.
 - Qwen2-VL-2B integration is modeled as a configurable encoder interface. In production, swap the internal encoder backend with your preferred Qwen2-VL checkpoint wiring while keeping losses and AB-Rec training identical.
+
+## New-data pipeline (train + ranking inference)
+
+This repository now includes an end-to-end script for `new_data/*_user_items_negs_{train,test}.csv`.
+
+- It auto-detects train/test by filename suffix (`_train.csv` and `_test.csv`).
+- It builds item multimodal/text embeddings by downloading backbone weights from HuggingFace (PyTorch backend).
+- Inference uses **1 target + 1000 random negatives** ranking and reports HR/NDCG at 10/20/40.
+- It prints per-step training progress and per-user running average metrics during inference.
+
+Example:
+
+```bash
+python scripts/train_and_infer_new_data.py \
+  --device cuda \
+  --config configs/new_data_baby.yaml \
+  --dataset-prefix Baby_Products \
+  --data-dir new_data \
+  --mode all \
+  --hf-model sentence-transformers/all-MiniLM-L6-v2 \
+  --epochs 2 \
+  --train-steps-per-epoch 200 \
+  --batch-size 256 \
+  --candidate-negatives 1000
+```
+
+You can also run train-only or infer-only via `--mode train` / `--mode infer`. The new-data pipeline is implemented in PyTorch and does not require TensorFlow runtime for execution.

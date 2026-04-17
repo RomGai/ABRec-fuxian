@@ -1,0 +1,35 @@
+seed: 42
+
+data:
+  recent_k: 20
+
+model:
+  id_embedding_dim: 128
+  mm_embedding_dim: 256
+  backbone_hidden_sizes: [256, 128]
+
+mm_encoder:
+  vocab_size: 32000
+  max_text_len: 128
+  metadata_len: 64
+  visual_token_dim: 256
+  item_cls_dim: 256
+
+  finetune:
+    mode: full
+    optimizer: adam
+    learning_rate: 1e-4
+
+  robustness:
+    masking_ratio: 0.3
+
+losses:
+  alpha: 0.25
+  beta: 0.7
+  eta: 0.6
+  total_loss_weight: 1.0
+
+training:
+  batch_size: 256
+  learning_rate: 1e-4
+  epochs: 2
