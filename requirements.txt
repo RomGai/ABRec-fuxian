@@ -2,3 +2,6 @@ tensorflow==2.9.0
 numpy>=1.23
 pyyaml>=6.0
 pytest>=7.0
+
+transformers>=4.40
+huggingface_hub>=0.23
