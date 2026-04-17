@@ -1,0 +1,57 @@
+seed: 42
+
+search:
+  alpha: [0.1, 0.2, 0.25, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  beta:  [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  eta:   [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+  batch_size: [256, 512, 1024, 2048]
+  learning_rate: [1e-3, 1e-4, 1e-5]
+  best_reported:
+    alpha: 0.25
+    beta: 0.7
+    eta: 0.6
+
+data:
+  num_users: 10000
+  num_items: 50000
+  recent_k: 20
+
+model:
+  id_embedding_dim: 128
+  mm_embedding_dim: 256
+  backbone_hidden_sizes: [256, 128]
+
+mm_encoder:
+  vocab_size: 32000
+  max_text_len: 128
+  metadata_len: 64
+  visual_token_dim: 256
+  item_cls_dim: 256
+
+  finetune:
+    mode: full        # full | peft
+    optimizer: adam
+    learning_rate: 1e-4
+
+  masking:
+    content_alignment_text_ratio: 0.2
+    robustness_text_ratio: 0.3
+    robustness_visual_ratio: 0.3
+
+  robustness:
+    masking_ratio: 0.3
+
+  preprocessing:
+    image_size: [224, 224]
+    video_num_frames: 8
+
+losses:
+  alpha: 0.25
+  beta: 0.7
+  eta: 0.6
+  total_loss_weight: 1.0
+
+training:
+  batch_size: 512
+  learning_rate: 1e-4
+  epochs: 3
