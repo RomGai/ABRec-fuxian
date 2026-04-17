@@ -101,4 +101,21 @@ python scripts/train_and_infer_new_data.py \
   --candidate-negatives 1000
 ```
 
+
+Video_Games example:
+
+```bash
+python scripts/train_and_infer_new_data.py \
+  --device cuda \
+  --config configs/new_data_video_games.yaml \
+  --dataset-prefix Video_Games \
+  --data-dir new_data \
+  --mode all \
+  --hf-model sentence-transformers/all-MiniLM-L6-v2 \
+  --epochs 2 \
+  --train-steps-per-epoch 200 \
+  --batch-size 256 \
+  --candidate-negatives 1000
+```
+
 You can also run train-only or infer-only via `--mode train` / `--mode infer`. The new-data pipeline is implemented in PyTorch and does not require TensorFlow runtime for execution.
